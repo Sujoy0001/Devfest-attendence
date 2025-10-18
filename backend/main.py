@@ -1,11 +1,20 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from models import IdRequest
 from utils import check_and_update
 from delete import reset_all_present
 import os
 
 app = FastAPI(title="CSV Unique ID Checker")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 CSV_PATH = "Sheet2.csv"
 
