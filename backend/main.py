@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from models import IdRequest
-from utils import check_and_update
+from utils import check_and_update, check_and_update_food
 from delete import reset_all_present
 import os
 
@@ -25,6 +25,11 @@ def index():
 @app.post("/check_id")
 def check_unique_id(request: IdRequest):
     result = check_and_update(request.unique_id.strip())
+    return result
+
+@app.post("/check_food")
+def check_food_id(request: IdRequest):
+    result = check_and_update_food(request.unique_id.strip())
     return result
 
 
