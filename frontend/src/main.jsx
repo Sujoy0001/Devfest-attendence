@@ -9,6 +9,8 @@ import Event from './pages/Evenv';
 import Food from './pages/Food';
 import Admin from './pages/Admin';
 
+// this code work without backend also.
+
 const router = createBrowserRouter([
   {
     path: '/',
