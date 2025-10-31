@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from models import IdRequest
 from utils import check_and_update, check_and_update_food
@@ -42,7 +42,11 @@ def download_csv():
             media_type="text/csv"
         )
     else:
-        return {"status": "error", "message": "CSV file not found"}
+        return JSONResponse(
+            status_code=404,
+            content={"status": "error", "message": "CSV file not found"}
+        )
+    
     
 @app.post("/reset_present")
 def reset_present():

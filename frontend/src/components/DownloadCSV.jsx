@@ -1,8 +1,11 @@
-import React from "react";
-import { FaDownload } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaDownload, FaSpinner } from "react-icons/fa";
 
 export default function DownloadCSV() {
+  const [loading, setLoading] = useState(false);
+
   const handleDownloadCSV = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/download_csv`);
       if (!response.ok) throw new Error("Failed to download file");
@@ -12,7 +15,7 @@ export default function DownloadCSV() {
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = "data.csv"; // File name
+      a.download = "attendance.csv"; // File name
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -20,17 +23,31 @@ export default function DownloadCSV() {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading CSV:", error);
-      alert("Failed to download CSV file. Please try again.");
+      alert("❌ Failed to download CSV file. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <button
       onClick={handleDownloadCSV}
-      className="flex items-center cursor-pointer justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow-md transition duration-300"
+      disabled={loading}
+      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-md font-semibold shadow-md transition duration-300 
+        ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white"}
+      `}
     >
-      <FaDownload className="text-lg" />
-      Download CSV
+      {loading ? (
+        <>
+          <FaSpinner className="animate-spin text-lg" />
+          <span>Downloading...</span>
+        </>
+      ) : (
+        <>
+          <FaDownload className="text-lg" />
+          <span>Download CSV</span>
+        </>
+      )}
     </button>
   );
 }
