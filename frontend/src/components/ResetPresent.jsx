@@ -12,7 +12,7 @@ export default function ResetPresent() {
 
     setLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/reset_present`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/reset_present`, {
         method: "POST",
       });
 

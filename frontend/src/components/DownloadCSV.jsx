@@ -4,7 +4,7 @@ import { FaDownload } from "react-icons/fa";
 export default function DownloadCSV() {
   const handleDownloadCSV = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/download_csv`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/download_csv`);
       if (!response.ok) throw new Error("Failed to download file");
 
       const blob = await response.blob();
